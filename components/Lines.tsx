@@ -1,12 +1,14 @@
 interface guessType {
   guess: string,
   isFinal: boolean,
-  solution: string
+  solution: string,
+  isEmpty: boolean
 }
 
-export default function Lines({ guess, isFinal, solution }: guessType) {
+export default function Lines({ guess, isFinal, solution, isEmpty }: guessType) {
   const tiles = []
   const WORD_LENGTH = 5
+  const empty = isEmpty ? 'animate-pulse duration-75' : ''
   let status = '';
   for (let i = 0; i < WORD_LENGTH; i++) {
     const char = guess[i]
@@ -17,15 +19,20 @@ export default function Lines({ guess, isFinal, solution }: guessType) {
       } else if (solution.includes(char)) {
         console.log('wrong place', char, solution[i])
         status += 'bg-yellow-500 '
-      } else {
+      } else if (char !== solution[i]) {
         console.log('Njei', char, solution[i])
         status += 'bg-red-300 '
       }
     }
+
     console.log(`⚡️ ${solution}`)
-    tiles.push(<div key={i} className={`${status} p-2 w-16 h-16 pulse border-solid border-gray-600 border-2 text-4xl flex align-center uppercase justify-center font-bold text-white`}>{char}</div>)
+    tiles.push(
+      <div key={i}
+        className={`${status} ${empty} p-2 w-16 h-16 pulse border-solid border-gray-600 border-2 text-4xl flex align-center uppercase justify-center font-bold text-white`}>
+        {char}
+      </div>)
   }
-  return <div className='flex items-center justify-center gap-1'>
+  return <div className={`${empty} flex items-center justify-center gap-1`}>
     {tiles}
   </div>
 }
