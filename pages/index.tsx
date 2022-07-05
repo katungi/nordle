@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { createQualifiedName } from 'typescript';
 import Lines from '../components/Lines';
 
-const Home: NextPage = ({ words = [] }) => {
+export default function Home({ words = [] }) {
 
   const [solution, setSolution] = useState('')
   const [guesses, setGuesses] = useState(Array(6).fill(null))
@@ -14,7 +14,7 @@ const Home: NextPage = ({ words = [] }) => {
   const [isGameOver, setIsGameOver] = useState(false)
 
   useEffect(() => {
-    const randomWord = words[Math.floor(Math.random() * words.length)]
+    const randomWord: string = words[Math.floor(Math.random() * words.length)]
     setSolution(randomWord.toLowerCase())
   }, [])
 
@@ -52,7 +52,9 @@ const Home: NextPage = ({ words = [] }) => {
       </Head>
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h2>Welcome to <span className="text-yellow-600">{solution} 🍋</span></h2>
+        <div className='m-10 text-2xl'>
+          <h2 className='text-white'>Welcome to <span className="text-yellow-600">Nordle 🍋</span></h2>
+        </div>
         <div className='flex flex-col gap-1'>
           {guesses.map((guess, index) => {
             const isCurrentGuess = index === guesses.findIndex(val => val == null)
@@ -64,8 +66,6 @@ const Home: NextPage = ({ words = [] }) => {
     </div>
   )
 }
-
-export default Home
 
 export async function getServerSideProps() {
   const res = await fetch('https://api.frontendexpert.io/api/fe/wordle-words')
