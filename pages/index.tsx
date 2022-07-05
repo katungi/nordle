@@ -12,6 +12,7 @@ export default function Home({ words = [] }) {
   const [currentGuess, setCurrentGuess] = useState('')
   const [correctState, setCorrectState] = useState('')
   const [isGameOver, setIsGameOver] = useState(false)
+  const [isEmpty, setIsEmpty] = useState(false)
 
   useEffect(() => {
     const randomWord: string = words[Math.floor(Math.random() * words.length)]
@@ -31,13 +32,21 @@ export default function Home({ words = [] }) {
         if (isCorrect) {
           setIsGameOver(true)
         }
+
+        if (guesses.length === 0) {
+          setIsEmpty(true)
+        }
       }
+
+      if (event.key === 'Tab' || event.key === 'Shift' || event.key === 'Alt' || event.key === 'CapsLock') return
 
       if (event.key === 'Backspace') {
         setCurrentGuess(currentGuess.slice(0, -1))
         return
       }
       if (currentGuess.length >= 5) return
+
+
       setCurrentGuess(oldGuess => oldGuess + event.key);
     }
     window.addEventListener('keydown', handleType);
@@ -61,6 +70,7 @@ export default function Home({ words = [] }) {
             return < Lines guess={isCurrentGuess ? currentGuess : guess ?? ''} isFinal={!isCurrentGuess && guess != null} solution={solution} />
           })}
           {isGameOver && <h1 className="text-yellow-600">Game Over ⚠️</h1>}
+          {isEmpty && <h1 className="text-yellow-600">Please enter a word ⚠️</h1>}
         </div>
       </main>
     </div>
