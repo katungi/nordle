@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { createQualifiedName } from 'typescript';
+import Celebrate from '../components/Celebrate';
 import Lines from '../components/Lines';
 
 export default function Home({ words = [] }) {
@@ -63,15 +64,21 @@ export default function Home({ words = [] }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
+      <main className="w-full h-screen flex flex-1 flex-col items-center justify-center px-20 text-center">
         <div className='m-10 text-2xl'>
           <h2 className='text-white'>Welcome to <span className="text-yellow-600">Nordle 🍋</span></h2>
         </div>
+
         <div className='flex flex-col gap-1'>
-          {guesses.map((guess, index) => {
-            const isCurrentGuess = index === guesses.findIndex(val => val == null)
-            return < Lines key={index} guess={isCurrentGuess ? currentGuess : guess ?? ''} isFinal={!isCurrentGuess && guess != null} solution={solution} isEmpty={isEmpty} />
-          })}
+          {isGameOver && <div className='relative z-0'>
+            <Celebrate />
+          </div>}
+          <div className='z-10'>
+            {guesses.map((guess, index) => {
+              const isCurrentGuess = index === guesses.findIndex(val => val == null)
+              return < Lines key={index} guess={isCurrentGuess ? currentGuess : guess ?? ''} isFinal={!isCurrentGuess && guess != null} solution={solution} isEmpty={isEmpty} />
+            })}
+          </div>
           {isGameOver &&
             <div className='m-3'>
               <h1 className="text-yellow-600 font-bold m-2 text-2xl">You Got it! 💖</h1>
