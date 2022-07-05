@@ -23,11 +23,13 @@ export default function Home({ words = [] }) {
   }
 
   useEffect(() => {
+    prompt()
     const randomWord: string = words[Math.floor(Math.random() * words.length)]
     setSolution(randomWord.toLowerCase())
   }, [])
 
   useEffect(() => {
+
     const handleType = (event: { key: string; }) => {
       setIsEmpty(false)
       if (isGameOver) return
@@ -73,7 +75,7 @@ export default function Home({ words = [] }) {
           {isGameOver && <div className='relative z-0'>
             <Celebrate />
           </div>}
-          <div className={isGameOver ? 'absolute z-10' : ''}>
+          <div className={isGameOver ? 'absolute p-8 z-10' : ''}>
             {guesses.map((guess, index) => {
               const isCurrentGuess = index === guesses.findIndex(val => val == null)
               return < Lines key={index} guess={isCurrentGuess ? currentGuess : guess ?? ''} isFinal={!isCurrentGuess && guess != null} solution={solution} isEmpty={isEmpty} />
