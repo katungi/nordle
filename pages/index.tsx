@@ -14,6 +14,13 @@ export default function Home({ words = [] }) {
   const [isGameOver, setIsGameOver] = useState(false)
   const [isEmpty, setIsEmpty] = useState(false)
 
+
+  function refreshPage() {
+    if (window) {
+      window.location.reload()
+    }
+  }
+
   useEffect(() => {
     const randomWord: string = words[Math.floor(Math.random() * words.length)]
     setSolution(randomWord.toLowerCase())
@@ -68,7 +75,9 @@ export default function Home({ words = [] }) {
           {isGameOver &&
             <div className='m-3'>
               <h1 className="text-yellow-600 font-bold m-2 text-2xl">You Got it! 💖</h1>
-              <button className="text-yellow-600 w-24 h-12 border-solid border-yellow-600 bg-black border-2 rounded-full"><p className='font-bold text-base'>RESTART</p> </button>
+              <button
+                onClick={refreshPage}
+                className="text-yellow-600 w-24 h-12 border-solid border-yellow-600 bg-black border-2 rounded-full"><p className='font-bold text-base'>RESTART</p> </button>
             </div>
           }
           {isEmpty && <h1 className="text-yellow-600">start typing a word ⚠️</h1>}
