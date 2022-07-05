@@ -23,9 +23,11 @@ export default function Home({ words = [] }) {
   }
 
   useEffect(() => {
-    prompt()
+
     const randomWord: string = words[Math.floor(Math.random() * words.length)]
     setSolution(randomWord.toLowerCase())
+    var inputFocus = document.getElementById('grid')
+    inputFocus?.focus()
   }, [])
 
   useEffect(() => {
@@ -71,7 +73,7 @@ export default function Home({ words = [] }) {
           <h2 className='text-white'>Welcome to <span className="text-yellow-600">Nordle 🍋</span></h2>
         </div>
 
-        <div className='flex flex-col gap-1'>
+        <div className='flex flex-col gap-1' id='grid'>
           {isGameOver && <div className='relative z-0'>
             <Celebrate />
           </div>}
