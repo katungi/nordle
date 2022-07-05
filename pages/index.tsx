@@ -14,7 +14,8 @@ const Home: NextPage = ({ words = [] }) => {
   const [isGameOver, setIsGameOver] = useState(false)
 
   useEffect(() => {
-    setSolution(words[Math.floor(Math.random() * words.length)])
+    const randomWord = words[Math.floor(Math.random() * words.length)]
+    setSolution(randomWord.toLowerCase())
   }, [])
 
   useEffect(() => {
@@ -22,16 +23,26 @@ const Home: NextPage = ({ words = [] }) => {
       if (isGameOver) return
       if (event.key === 'Enter') {
         if (currentGuess.length !== 5) return
+        const newGuesses = [...guesses]
+        newGuesses[guesses.findIndex(val => val == null)] = currentGuess
+        setGuesses(newGuesses)
+        setCurrentGuess('')
         const isCorrect = solution === currentGuess;
         if (isCorrect) {
           setIsGameOver(true)
         }
       }
+
+      if (event.key === 'Backspace') {
+        setCurrentGuess(currentGuess.slice(0, -1))
+        return
+      }
+      if (currentGuess.length >= 5) return
       setCurrentGuess(oldGuess => oldGuess + event.key);
     }
     window.addEventListener('keydown', handleType);
     return () => window.removeEventListener('keydown', handleType);
-  }, [])
+  }, [currentGuess, isGameOver, solution, guesses])
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
@@ -48,13 +59,13 @@ const Home: NextPage = ({ words = [] }) => {
           </a>
         </h4> */}
 
-        {/* <h2>Word is <span className="text-yellow-600">{solution}</span></h2> */}
+        <h2>Word is <span className="text-yellow-600">{solution}</span></h2>
         <div className='flex flex-col gap-1'>
           {guesses.map((guess, index) => {
             const isCurrentGuess = index === guesses.findIndex(val => val == null)
-            return < Lines guess={isCurrentGuess ? currentGuess : guess ?? ''
-            } />
+            return < Lines guess={isCurrentGuess ? currentGuess : guess ?? ''} isFinal={!isCurrentGuess && guess != null} solution={solution} />
           })}
+          {isGameOver && <h1 className="text-yellow-600">Game OVer ⚠️</h1>}
         </div>
       </main>
     </div>
