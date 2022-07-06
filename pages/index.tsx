@@ -124,7 +124,7 @@ export default function Home({ words = [] }) {
               <Celebrate />
             </div>
           }
-          <div className={isGameOver ? 'absolute p-8 z-10' : ''}>
+          <div className={isGameOver ? 'absolute p-8 z-10' : 'flex flex-col gap-1'}>
             {guesses.map((guess, index) => {
               const isCurrentGuess = index === guesses.findIndex(val => val == null)
               return < Lines key={index} guess={isCurrentGuess ? currentGuess : guess ?? ''} isFinal={!isCurrentGuess && guess != null} solution={solution} isEmpty={isEmpty} />

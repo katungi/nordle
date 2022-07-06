@@ -28,7 +28,7 @@ export default function Lines({ guess, isFinal, solution, isEmpty }: guessType) 
     console.log(`⚡️ ${solution}`)
     tiles.push(
       <div key={i}
-        className={`${status} ${empty} p-2 w-16 h-16 pulse border-solid border-gray-600 border-2 text-4xl flex align-center uppercase justify-center font-bold text-white`}>
+        className={`${status} ${empty} p-2 w-16 h-16 border-solid border-gray-600 border-2 text-4xl flex align-center uppercase justify-center font-bold text-white`}>
         {char}
       </div>)
   }
