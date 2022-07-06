@@ -21,8 +21,13 @@ export default function Home({ words = [] }) {
     'default': [
       'q w e r t y u i o p',
       'a s d f g h j k l',
-      '{enter} z x c v b n m {bksp}',
+      '{backspace} z x c v b n m {enter}',
     ],
+  }
+
+  const keyboardDisplay = {
+    "{backspace}": "⌫",
+    "{enter}": "⏎",
   }
 
   function refreshPage() {
@@ -93,7 +98,7 @@ export default function Home({ words = [] }) {
       }
     }
 
-    if (input === '{bksp}') {
+    if (input === '{backspace}') {
       setCurrentGuess(currentGuess.slice(0, -1))
       return
     }
@@ -113,10 +118,12 @@ export default function Home({ words = [] }) {
           <h2 className='text-white'>Welcome to <span className="text-yellow-600">Nordle 🍋</span></h2>
         </div>
 
-        <div className='flex flex-col gap-1' id='grid'>
-          {isGameOver && <div className='relative z-0'>
-            <Celebrate />
-          </div>}
+        <div className='flex flex-col gap-1'>
+          {isGameOver &&
+            <div className='relative z-0'>
+              <Celebrate />
+            </div>
+          }
           <div className={isGameOver ? 'absolute p-8 z-10' : ''}>
             {guesses.map((guess, index) => {
               const isCurrentGuess = index === guesses.findIndex(val => val == null)
@@ -131,7 +138,9 @@ export default function Home({ words = [] }) {
                 className="text-yellow-600 w-24 h-12 border-solid border-yellow-600 bg-black border-2 rounded-full"><p className='font-bold text-base'>RESTART</p> </button>
             </div>
           }
-          {isEmpty && <h1 className="text-yellow-600">start typing a word ⚠️</h1>}
+          {isEmpty &&
+            <h1 className="text-yellow-600">start typing a word ⚠️</h1>
+          }
         </div>
       </main>
 
@@ -144,6 +153,7 @@ export default function Home({ words = [] }) {
         layout={layout}
         layoutName={'default'}
         physicalKeyboardHighlight={true}
+        display={keyboardDisplay}
       />
 
       <footer className="mt-4 flex w-full items-center justify-center text-white">

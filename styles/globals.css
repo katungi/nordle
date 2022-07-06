@@ -9,6 +9,9 @@
 
 .simple-keyboard {
   max-width: 450px;
+  max-height: 450px;
+  margin: 10px;
+  padding: 20px;
 }
 
 .simple-keyboard.myTheme1 {
@@ -17,7 +20,6 @@
 
 .simple-keyboard.myTheme1 .hg-button {
   height: 50px;
-  width: 75%;
   display: flex;
   justify-content: center;
   align-items: center;
