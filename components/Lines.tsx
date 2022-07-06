@@ -14,13 +14,13 @@ export default function Lines({ guess, isFinal, solution, isEmpty }: guessType) 
     const char = guess[i]
     if (isFinal) {
       if (char === solution[i]) {
-        console.log('correct', char, solution[i])
+        // console.log('correct', char, solution[i])
         status += 'bg-green-500 '
       } else if (solution.includes(char)) {
-        console.log('wrong place', char, solution[i])
+        // console.log('wrong place', char, solution[i])
         status += 'bg-yellow-500 '
       } else if (char !== solution[i]) {
-        console.log('Njei', char, solution[i])
+        // console.log('Njei', char, solution[i])
         status += 'bg-red-300 '
       }
     }

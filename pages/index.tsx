@@ -15,14 +15,13 @@ export default function Home({ words = [] }) {
   const [correctState, setCorrectState] = useState('')
   const [isGameOver, setIsGameOver] = useState(false)
   const [isEmpty, setIsEmpty] = useState(false)
-  const [virtualInput, setVirtualInput] = useState(null)
+  const [virtualInput, setVirtualInput] = useState('')
 
   const layout = {
     'default': [
-      '{bksp}',
       'q w e r t y u i o p',
-      'a s d f g h j k l \{enter}',
-      'z x c v b n m',
+      'a s d f g h j k l',
+      '{enter} z x c v b n m {bksp}',
     ],
   }
 
@@ -33,11 +32,8 @@ export default function Home({ words = [] }) {
   }
 
   useEffect(() => {
-
     const randomWord: string = words[Math.floor(Math.random() * words.length)]
     setSolution(randomWord.toLowerCase())
-    var inputFocus = document.getElementById('grid')
-    inputFocus?.focus()
   }, [])
 
   useEffect(() => {
@@ -55,9 +51,17 @@ export default function Home({ words = [] }) {
         if (isCorrect) {
           setIsGameOver(true)
         }
+
+        // if (guesses.findIndex(currentGuess) === guesses.length - 1) {
+        //   console.log('Game Over ⚠️')
+        // }
       }
 
-      if (event.key === 'Tab' || event.key === 'Shift' || event.key === 'Alt' || event.key === '') return
+      const isLetter = event.key.match(/^[a-z]{1}$/) != null
+
+      if (isLetter) {
+        setCurrentGuess(oldGuess => oldGuess + event.key)
+      }
 
       if (event.key === 'Backspace') {
         setCurrentGuess(currentGuess.slice(0, -1))
@@ -72,16 +76,33 @@ export default function Home({ words = [] }) {
     return () => window.removeEventListener('keydown', handleType);
   }, [currentGuess, isGameOver, solution, guesses])
 
-  useEffect(() => {
-    const handleType = (input: string) => {
-      console.log('input🔖', input)
+  const handleVirtualType = (input: string) => {
+    console.log(input, currentGuess)
+    setIsEmpty(false)
+    if (isGameOver) return
+    if (input === '{enter}') {
+      if (currentGuess.length === 0) { setIsEmpty(true) }
+      if (currentGuess.length !== 5) return
+      const newGuesses = [...guesses]
+      newGuesses[guesses.findIndex(val => val == null)] = currentGuess
+      setGuesses(newGuesses)
+      setCurrentGuess('')
+      const isCorrect = solution === currentGuess;
+      if (isCorrect) {
+        setIsGameOver(true)
+      }
     }
-    handleType(virtualInput)
-  }, [setVirtualInput])
 
+    if (input === '{bksp}') {
+      setCurrentGuess(currentGuess.slice(0, -1))
+      return
+    }
+    if (currentGuess.length >= 5) return
+    setCurrentGuess(oldGuess => oldGuess + input);
+  }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2 bg-white">
+    <div className="flex min-h-screen flex-col items-center justify-center py-2 bg-black">
       <Head>
         <title>Nordle 🍋</title>
         <link rel="icon" href="/favicon.ico" />
@@ -113,17 +134,28 @@ export default function Home({ words = [] }) {
           {isEmpty && <h1 className="text-yellow-600">start typing a word ⚠️</h1>}
         </div>
       </main>
-      <footer>
-        <KeyboardReact
-          onChange={input => setCurrentGuess(input.charAt(input.length - 1))}
-          onKeyPress={(button: any) => setVirtualInput(button)}
-          theme={'hg-theme-default hg-theme-ios'}
-          debug={false}
-          newLineOnEnter={true}
-          inputName={'default'}
-          layout={layout}
-          layoutName={'default'}
-        />
+
+      <KeyboardReact
+        onKeyPress={(button: any) => handleVirtualType(button)}
+        theme={'hg-theme-default hg-theme-ios myTheme1'}
+        debug={false}
+        newLineOnEnter={true}
+        inputName={'default'}
+        layout={layout}
+        layoutName={'default'}
+        physicalKeyboardHighlight={true}
+      />
+
+      <footer className="mt-4 flex w-full items-center justify-center text-white">
+        <a
+          className="flex items-center justify-center gap-2"
+          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Made with 💖 by{' '}
+          <p className='text-yellow-600'> katungi</p>
+        </a>
       </footer>
     </div>
   )
