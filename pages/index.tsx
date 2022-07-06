@@ -149,7 +149,7 @@ export default function Home({ words = [] }) {
       <footer className="mt-4 flex w-full items-center justify-center text-white">
         <a
           className="flex items-center justify-center gap-2"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="dankat.io"
           target="_blank"
           rel="noopener noreferrer"
         >

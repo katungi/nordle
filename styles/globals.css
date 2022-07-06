@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;1,200&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
 
 .simple-keyboard {
   max-width: 450px;
