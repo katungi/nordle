@@ -652,6 +652,11 @@ react-lottie@^1.2.3:
     babel-runtime "^6.26.0"
     lottie-web "^5.1.3"
 
+react-simple-keyboard@^3.4.166:
+  version "3.4.166"
+  resolved "https://registry.yarnpkg.com/react-simple-keyboard/-/react-simple-keyboard-3.4.166.tgz#41ede2f4cf2df56bfc7129c49d0f04925c0c9d56"
+  integrity sha512-NJRQJnByAtvE99vc/K6S5AZZzqWkdLQ0Ggy0FJXKmRlmT4cFcjfP03Ec9hylumofEq9CVc2fUGpY46p7pnIufg==
+
 react@18.1.0:
   version "18.1.0"
   resolved "https://registry.npmjs.org/react/-/react-18.1.0.tgz"
@@ -705,6 +710,11 @@ scheduler@^0.22.0:
   integrity sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==
   dependencies:
     loose-envify "^1.1.0"
+
+simple-keyboard@^3.4.122:
+  version "3.4.122"
+  resolved "https://registry.yarnpkg.com/simple-keyboard/-/simple-keyboard-3.4.122.tgz#786b509b8d6ddd180472b3a0742ff4f8213b589b"
+  integrity sha512-qG1kXgkAMcJ/yBOjwRHbss/l5EaJoIgU0+4xXd/ynhdfPnD9juAAJNKfgFtFWu/GtfxFJy5N1H40DNI8HJJBEw==
 
 source-map-js@^1.0.1, source-map-js@^1.0.2:
   version "1.0.2"

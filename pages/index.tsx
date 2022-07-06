@@ -2,6 +2,7 @@ import axios from 'axios'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
+import KeyboardReact from 'react-simple-keyboard';
 import { createQualifiedName } from 'typescript';
 import Celebrate from '../components/Celebrate';
 import Lines from '../components/Lines';
@@ -14,7 +15,16 @@ export default function Home({ words = [] }) {
   const [correctState, setCorrectState] = useState('')
   const [isGameOver, setIsGameOver] = useState(false)
   const [isEmpty, setIsEmpty] = useState(false)
+  const [virtualInput, setVirtualInput] = useState(null)
 
+  const layout = {
+    'default': [
+      '{bksp}',
+      'q w e r t y u i o p',
+      'a s d f g h j k l \{enter}',
+      'z x c v b n m',
+    ],
+  }
 
   function refreshPage() {
     if (window) {
@@ -31,7 +41,6 @@ export default function Home({ words = [] }) {
   }, [])
 
   useEffect(() => {
-
     const handleType = (event: { key: string; }) => {
       setIsEmpty(false)
       if (isGameOver) return
@@ -57,12 +66,22 @@ export default function Home({ words = [] }) {
       if (currentGuess.length >= 5) return
       setCurrentGuess(oldGuess => oldGuess + event.key);
     }
+
+
     window.addEventListener('keydown', handleType);
     return () => window.removeEventListener('keydown', handleType);
   }, [currentGuess, isGameOver, solution, guesses])
 
+  useEffect(() => {
+    const handleType = (input: string) => {
+      console.log('input🔖', input)
+    }
+    handleType(virtualInput)
+  }, [setVirtualInput])
+
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2 bg-black">
+    <div className="flex min-h-screen flex-col items-center justify-center py-2 bg-white">
       <Head>
         <title>Nordle 🍋</title>
         <link rel="icon" href="/favicon.ico" />
@@ -94,6 +113,18 @@ export default function Home({ words = [] }) {
           {isEmpty && <h1 className="text-yellow-600">start typing a word ⚠️</h1>}
         </div>
       </main>
+      <footer>
+        <KeyboardReact
+          onChange={input => setCurrentGuess(input.charAt(input.length - 1))}
+          onKeyPress={(button: any) => setVirtualInput(button)}
+          theme={'hg-theme-default hg-theme-ios'}
+          debug={false}
+          newLineOnEnter={true}
+          inputName={'default'}
+          layout={layout}
+          layoutName={'default'}
+        />
+      </footer>
     </div>
   )
 }
