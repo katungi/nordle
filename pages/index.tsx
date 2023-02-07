@@ -43,6 +43,7 @@ export default function Home({ words = [] }) {
 
   useEffect(() => {
     const handleType = (event: { key: string; }) => {
+      console.log("pressed:", event.key)
       setIsEmpty(false)
       if (isGameOver) return
       if (event.key === 'Enter') {
@@ -56,24 +57,22 @@ export default function Home({ words = [] }) {
         if (isCorrect) {
           setIsGameOver(true)
         }
-
         // if (guesses.findIndex(currentGuess) === guesses.length - 1) {
         //   console.log('Game Over ⚠️')
         // }
       }
 
       const isLetter = event.key.match(/^[a-z]{1}$/) != null
-
       if (isLetter) {
         setCurrentGuess(oldGuess => oldGuess + event.key)
+        console.log('currentGuess', currentGuess)
       }
-
       if (event.key === 'Backspace') {
         setCurrentGuess(currentGuess.slice(0, -1))
         return
       }
       if (currentGuess.length >= 5) return
-      setCurrentGuess(oldGuess => oldGuess + event.key);
+      //setCurrentGuess(oldGuess => oldGuess + event.key);
     }
 
 
