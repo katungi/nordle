@@ -43,7 +43,6 @@ export default function Home({ words = [] }) {
 
   useEffect(() => {
     const handleType = (event: { key: string; }) => {
-      console.log("pressed:", event.key)
       setIsEmpty(false)
       if (isGameOver) return
       if (event.key === 'Enter') {
@@ -65,7 +64,6 @@ export default function Home({ words = [] }) {
       const isLetter = event.key.match(/^[a-z]{1}$/) != null
       if (isLetter) {
         setCurrentGuess(oldGuess => oldGuess + event.key)
-        console.log('currentGuess', currentGuess)
       }
       if (event.key === 'Backspace') {
         setCurrentGuess(currentGuess.slice(0, -1))
@@ -81,7 +79,6 @@ export default function Home({ words = [] }) {
   }, [currentGuess, isGameOver, solution, guesses])
 
   const handleVirtualType = (input: string) => {
-    console.log(input, currentGuess)
     setIsEmpty(false)
     if (isGameOver) return
     if (input === '{enter}') {

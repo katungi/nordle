@@ -11,12 +11,7 @@ const Celebrate = () => {
     },
   }
 
-  return <div>
-    <Lottie options={defaultOptions}
-      height={400}
-      width={400}
-    />
-  </div>
+  return <div><Lottie options={defaultOptions} height={400} width={400} /></div>
 }
 
 export default Celebrate
